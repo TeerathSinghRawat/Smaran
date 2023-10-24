@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:async';
 
 import 'package:alzheimersapporig/Screens/Patient/PreviousCaretaker.dart';
 import 'package:alzheimersapporig/Screens/Patient/currentCaretaker.dart';
@@ -7,6 +8,9 @@ import 'package:alzheimersapporig/Screens/Patient/memories.dart';
 import 'package:alzheimersapporig/Screens/Patient/patient%20profile.dart';
 import 'package:alzheimersapporig/models/usermodel.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart' as loc;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   final UserModel userModel;
@@ -17,6 +21,71 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final loc.Location location = loc.Location();
+  StreamSubscription<loc.LocationData>? _locationSubscription;
+  void checkPermissionStatus() async{
+    var status = await Permission.locationWhenInUse.status;
+    if (status != PermissionStatus.granted) {
+
+      _requestPermission();
+
+    }else{
+      _getLocation();
+    }
+  }
+  _requestPermission() async {
+    var status = await Permission.location.request();
+    if (status.isGranted) {
+      location.enableBackgroundMode(enable: true);
+      _getLocation();
+      print('done');
+    } else if (status.isDenied) {
+      _requestPermission();
+    } else if (status.isPermanentlyDenied) {
+      openAppSettings();
+    }
+  }
+  _getLocation() async {
+    try {
+      print("get loc");
+      final loc.LocationData _locationResult = await loc.Location().getLocation();
+      print("check");
+      await FirebaseFirestore.instance.collection('location').doc(widget.userModel.uid).set({
+        'latitude': _locationResult.latitude,
+        'longitude': _locationResult.longitude,
+        'name': 'john'
+      }, SetOptions(merge: true));
+      _listenLocation();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _listenLocation() async {
+    print("start listen loc");
+    _locationSubscription = location.onLocationChanged.handleError((onError) {
+      print(onError);
+      _locationSubscription?.cancel();
+      setState(() {
+        _locationSubscription = null;
+      });
+    }).listen((loc.LocationData currentlocation) async {
+      print(currentlocation.latitude);
+      await FirebaseFirestore.instance.collection('location').doc(widget.userModel.uid).set({
+        'latitude': currentlocation.latitude,
+        'longitude': currentlocation.longitude,
+        'name': 'john'
+      }, SetOptions(merge: true));
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkPermissionStatus();
+
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -26,7 +95,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text('Home Page'),
+        title: const Text('Home Page',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -53,7 +122,7 @@ class _HomePageState extends State<HomePage> {
             image: DecorationImage(
                 fit: BoxFit.fill,
                 image: NetworkImage(
-                    'https://www.maxlifeinsurance.com/content/dam/corporate/images/Health%20Insurance%20Policy%20in%20India%201.png'))),
+                    'https://media.istockphoto.com/id/911633218/vector/abstract-geometric-medical-cross-shape-medicine-and-science-concept-background.jpg?s=612x612&w=0&k=20&c=eYz8qm5xa5wbWCWKgjOpTamavekYv8XqPTA0MC4tHGA='))),
         child: Column(
           children: [
             SizedBox(

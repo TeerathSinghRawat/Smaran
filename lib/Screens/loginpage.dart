@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
 
   Widget build(BuildContext context) {
-    // double width=MediaQuery.of(context).size.width;
+    double width=MediaQuery.of(context).size.width;
     double height=MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.bottomLeft,
                 child: const Padding(
                   padding: EdgeInsets.all(13),
-                  child: Text("Sign in to your Account",
+                  child: Text("Login to your Account",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 41,
@@ -164,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(139, 213, 64, 10)),
                         ),
-                        child: const Text("Sign In",
+                        child: const Text("Login",
                           style: TextStyle(
                               fontSize: 28,
                             fontFamily: 'Domine'
@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.grey),
                         ),
-                        child: const Text("Sign in using phone",
+                        child: const Text("Login using phone",
                           style: TextStyle(
                             color: Colors.black,
                               fontSize: 22,

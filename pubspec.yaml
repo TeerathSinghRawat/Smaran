@@ -49,6 +49,10 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.4.54
   just_audio: ^0.9.35
   uuid: ^3.0.7
+  location: ^5.0.3
+  permission_handler: ^11.0.1
+  google_maps_flutter: ^2.5.0
+
 
 dev_dependencies:
   flutter_test:

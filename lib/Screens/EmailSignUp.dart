@@ -75,7 +75,8 @@ class _EmailSignUpPageState extends State<EmailSignUpPage> {
   @override
 
   Widget build(BuildContext context) {
-
+    double width=MediaQuery.of(context).size.width;
+    double height=MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -88,7 +89,7 @@ class _EmailSignUpPageState extends State<EmailSignUpPage> {
           child: Column(
             children: [
               Container(
-                height: 300,
+                height: height*0.25,
                 width: 500,
                 decoration: const BoxDecoration(color: Color.fromRGBO(28, 36, 31, 3)),
                 alignment: Alignment.bottomLeft,

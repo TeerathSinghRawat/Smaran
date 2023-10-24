@@ -20,7 +20,7 @@ class AddNewPatientScreen extends StatefulWidget {
 }
 
 class _AddNewPatientScreenState extends State<AddNewPatientScreen> {
-  TextEditingController phoneController=TextEditingController();
+  TextEditingController emailController=TextEditingController();
   EmailOTP myAuth=EmailOTP();
   @override
   Widget build(BuildContext context) {
@@ -37,9 +37,9 @@ class _AddNewPatientScreenState extends State<AddNewPatientScreen> {
           child: Column(
             children: [
               TextField(
-                controller: phoneController,
+                controller: emailController,
                 decoration: const InputDecoration(
-                    labelText: "Enter Phone Number to search"
+                    labelText: "Enter email to search"
                 ),
 
               ),
@@ -55,7 +55,7 @@ class _AddNewPatientScreenState extends State<AddNewPatientScreen> {
               const SizedBox(height: 20,),
               StreamBuilder(
                   stream: FirebaseFirestore.instance.collection("users").
-                  where("contact",isEqualTo: phoneController.text).where("category", isEqualTo: "Patient").snapshots(),
+                  where("email",isEqualTo: emailController.text).where("category", isEqualTo: "Patient").snapshots(),
                   builder: (context,snapshot){
                     if(snapshot.connectionState==ConnectionState.active){
                       if(snapshot.hasData){

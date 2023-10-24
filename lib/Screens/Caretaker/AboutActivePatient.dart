@@ -2,8 +2,11 @@
 
 import 'package:alzheimersapporig/Screens/MedicalHistory.dart';
 import 'package:alzheimersapporig/models/usermodel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'mymapscreen.dart';
 
 class AboutActivePatientScreen extends StatelessWidget {
   final UserModel userModel;
@@ -132,35 +135,43 @@ class AboutActivePatientScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            SizedBox(
-              width: width * 0.85,
-              height: 50,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
-                ),
-                onPressed: () {},
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.my_location,
-                      size: 30,
-                      color: Colors.green,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      "Track patient",
-                      style: TextStyle(
-                          fontSize: 19,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            Expanded(
+                child: StreamBuilder(
+                  stream:
+                  FirebaseFirestore.instance.collection('location').snapshots(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return ListView.builder(
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title:
+                            Text(snapshot.data!.docs[index]['name'].toString()),
+                            subtitle: Row(
+                              children: [
+                                Text(snapshot.data!.docs[index]['latitude']
+                                    .toString()),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(snapshot.data!.docs[index]['longitude']
+                                    .toString()),
+                              ],
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(Icons.directions),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyMap(snapshot.data!.docs[index].id)));
+                              },
+                            ),
+                          );
+                        });
+                  },
+                )),
             const SizedBox(
               height: 10,
             ),

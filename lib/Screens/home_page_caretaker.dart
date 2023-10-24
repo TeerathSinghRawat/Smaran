@@ -26,7 +26,7 @@ class _CaretakerHomePageState extends State<CaretakerHomePage> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text('Home Page'),
+        title: const Text('Home Page',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -50,11 +50,11 @@ class _CaretakerHomePageState extends State<CaretakerHomePage> {
             image: DecorationImage(
                 fit: BoxFit.fill,
                 image: NetworkImage(
-                    'https://www.maxlifeinsurance.com/content/dam/corporate/images/Health%20Insurance%20Policy%20in%20India%201.png'))),
+                    'https://media.istockphoto.com/id/911633218/vector/abstract-geometric-medical-cross-shape-medicine-and-science-concept-background.jpg?s=612x612&w=0&k=20&c=eYz8qm5xa5wbWCWKgjOpTamavekYv8XqPTA0MC4tHGA='))),
         child: Column(
           children: [
             SizedBox(
-              height: height * 0.15,
+              height: height * 0.18,
             ),
             ReusableContainer(
               text: "Active Patient",

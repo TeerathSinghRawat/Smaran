@@ -125,31 +125,31 @@ class _CaretakerProfileState extends State<CaretakerProfile> {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.popUntil(context, (route) => route.isFirst);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  CaretakerHomePage(userModel: widget.myUser)));
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                      size: 30,
-                    )),
-                const SizedBox(
-                  width: 10,
-                ),
-                const Text(
-                  "My Profile",
-                  style: TextStyle(fontSize: 20),
-                )
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     IconButton(
+            //         onPressed: () {
+            //           Navigator.popUntil(context, (route) => route.isFirst);
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: (context) =>
+            //                       CaretakerHomePage(userModel: widget.myUser)));
+            //         },
+            //         icon: const Icon(
+            //           Icons.arrow_back,
+            //           color: Colors.black,
+            //           size: 30,
+            //         )),
+            //     const SizedBox(
+            //       width: 10,
+            //     ),
+            //     const Text(
+            //       "My Profile",
+            //       style: TextStyle(fontSize: 20),
+            //     )
+            //   ],
+            // ),
             Center(
               child: Stack(
                 children: [

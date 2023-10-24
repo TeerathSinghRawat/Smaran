@@ -131,7 +131,7 @@ class _PatientProfileState extends State<PatientProfile> {
                 ],
               ),
               SizedBox(
-                height: height * 0.1,
+                height: height * 0.06,
               ),
               Center(
                 child: Stack(

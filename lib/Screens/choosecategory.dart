@@ -9,8 +9,12 @@ class ChooseCategory extends StatefulWidget {
 }
 
 class _ChooseCategoryState extends State<ChooseCategory> {
+
+
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -23,10 +27,11 @@ class _ChooseCategoryState extends State<ChooseCategory> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 45,
-                    fontFamily: "Domine"
+                    fontFamily: "Domine",
+                    color: Colors.blue
                   ),
                 ),
-                const SizedBox(height: 60,),
+                const SizedBox(height: 90,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -35,14 +40,32 @@ class _ChooseCategoryState extends State<ChooseCategory> {
                         return const LoginPage(category: "Patient",);
                       }));
                     },
-                        child: const Text("Patient")
+                        child: SizedBox(
+                          height: height*0.3,
+                          width: width*0.4,
+                          child: Column(
+                            children: [
+                              Image(image: NetworkImage("https://cdn-icons-png.flaticon.com/512/1742/1742624.png")),
+                              Text("Patient",style: TextStyle(color: Colors.brown,fontSize: 20))
+                            ],
+                          ),
+                        )
                     ),
                     TextButton(onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context){
                         return const LoginPage(category: "caretaker",);
                       }));
                     },
-                        child: const Text("Caretaker")
+                        child: SizedBox(
+                          height: height*0.3,
+                          width: width*0.4,
+                          child: Column(
+                            children: [
+                              Image(image: NetworkImage("https://cdn3d.iconscout.com/3d/premium/thumb/nurse-showing-thumbs-up-6774615-5575391.png?f=webp")),
+                              Text("Caretaker",style: TextStyle(color: Colors.teal,fontSize: 20),)
+                            ],
+                          ),
+                        )
                     )
                   ],
                 )
